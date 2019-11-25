@@ -97,7 +97,14 @@ requirejs(['ext_editor_1', 'jquery_190', 'raphael_210'],
 
 
             if (!result) {
-                $content.find('.answer').html('Right result:&nbsp;' + JSON.stringify(rightResult));
+                var is_magician_test = test_code.includes("magician");
+                var answer;
+                if (is_magician_test) {
+                    answer = 'Right result:&nbsp;' + JSON.stringify(rightResult[0]);
+                } else {
+                    answer = 'List of right results:&nbsp;' + JSON.stringify(rightResult);
+                }
+                $content.find('.answer').html(answer);
                 $content.find('.answer').addClass('error');
                 $content.find('.output').addClass('error');
                 $content.find('.call').addClass('error');
