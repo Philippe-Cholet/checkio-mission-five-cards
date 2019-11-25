@@ -1,10 +1,12 @@
 <style>
-    code.r { font-size: 1.15em; color: red; }
-    code.b { font-size: 1.15em; color: #163e69; }
+    code { background: transparent; white-space: nowrap; }
+    code.r { color: red; }
+    code.b { color: #163e69; }
     table { border-collapse: collapse; }
     th, td { border: 1px solid #163e69; padding: 5px; }
     th, td:first-child { text-align: center; font-weight: bold; }
     th:first-child { border: 0px; }
+    p { text-align: justify; }
 </style>
 
 <div class="story for_info_only">
@@ -31,7 +33,7 @@ the same integer and return the fifth one.
 
 <p>
 The trick use the <a href="https://en.wikipedia.org/wiki/Standard_52-card_deck">standard 52-card deck</a>.
-Cards will be represented like <code>'<code class="r">A ♥</code>', '<code class="r">3 ♦</code>', '<code class="b">K ♠</code>', '<code class="b">Q ♣</code>', '<code class="r">J ♦</code>'</code>
+Cards will be represented like <code class="r">'A ♥'</code>, <code class="r">'3 ♦'</code>, <code class="b">'K ♠'</code>, <code class="b">'Q ♣'</code>, <code class="r">'J ♦'</code>
 (<code class="b">♣</code> for clubs, <code class="r">♦</code> for diamonds,
 <code class="r">♥</code> for hearts, <code class="b">♠</code> for spades,
 A for Ace, J for Jack, Q for Queen and K for King).<br>
@@ -73,7 +75,7 @@ the second time, say it second, ..., the fifth time, say it first again...
     <li>
         <code class="r">3 ♦</code> and <code class="r">J ♦</code> have the same suit, it's quicker to go from
         <code class="r">J ♦</code> to <code class="r">3 ♦</code> (<i>delta = 5</i>) than otherwise (8).
-        We <i>hide <code class="r">3 ♦</code></i>. And the <i>starting point is <code class="r">J ♦</code></i>.
+        The <i>starting point</i> is <code class="r">J ♦</code> and we <i>hide</i> <code class="r">3 ♦</code>.
     </li>
     <li>
         Remains <code class="r">A ♥</code>, <code class="b">K ♠</code> and <code class="b">Q ♣</code>.
@@ -94,7 +96,7 @@ the second time, say it second, ..., the fifth time, say it first again...
     <li>
         From <code class="r">A ♥</code>, <code class="b">Q ♣</code>, <code class="b">K ♠</code> order, he deduces <i>delta = 5</i>
         (since <code class="r">A ♥</code> < <code class="b">Q ♣</code> < <code class="b">K ♠</code>).
-        So <code class="r">J ♦</code> <code>+ 5 ==</code> <code class="r">3 ♦</code>.
+        So <code><code class="r">J ♦</code> + 5 == <code class="r">3 ♦</code></code>.
         He says it, with some show.
     </li>
 </ul>
@@ -111,15 +113,16 @@ the second time, say it second, ..., the fifth time, say it first again...
     </thead>
     <tr>
         <td>Input</td>
-        <td>Five strings and an integer.</td>
-        <td>Four strings and an integer.</td>
+        <td>Five strings and an integer</td>
+        <td>Four strings and an integer</td>
     </tr>
     <tr>
         <td>Output</td>
-        <td>A list/tuple of four strings.</td>
-        <td>A string.</td>
+        <td>A list/tuple of four strings</td>
+        <td>A string</td>
     </tr>
 </table>
+<br>
 
 <pre class="for_info_only brush: python">
 bot('A ♥', '3 ♦', 'K ♠', 'Q ♣', 'J ♦', n=1) == ['J ♦', 'A ♥', 'Q ♣', 'K ♠']
