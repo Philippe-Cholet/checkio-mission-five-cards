@@ -66,7 +66,7 @@ DATA = {
           ('K ♣', '4 ♥', '5 ♥', '10 ♦'): 'J ♦'}],
         ],
 
-    'Random': [random_data(n) for n in range(1, 31, 3)],
+    'Random': [random_data(n) for n in range(1, 3*15+1, 3)],
     }
 
 

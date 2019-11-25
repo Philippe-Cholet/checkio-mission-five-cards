@@ -1,3 +1,6 @@
+# Don't share my solution
+my_solution.py
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

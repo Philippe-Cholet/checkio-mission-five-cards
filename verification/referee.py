@@ -33,6 +33,7 @@ else:
         nb_success = 0
         for cat, test_nb, test in all_tests:
             test_code = test['show']['python-3']
+            print(test_code)
             data = dict(code_result=eval(test_code))
             success = result_in_answers(data, test)[0]
             if not success:
