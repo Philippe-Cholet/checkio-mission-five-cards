@@ -97,7 +97,7 @@ requirejs(['ext_editor_1', 'jquery_190', 'raphael_210'],
 
 
             if (!result) {
-                var is_magician_test = test_code.includes("magician");
+                var is_magician_test = test_code[runner].includes("magician");
                 var answer;
                 if (is_magician_test) {
                     answer = 'Right result:&nbsp;' + JSON.stringify(rightResult[0]);
