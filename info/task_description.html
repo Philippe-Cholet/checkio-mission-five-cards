@@ -1,0 +1,131 @@
+<style>
+    code.r { font-size: 1.15em; color: red; }
+    code.b { font-size: 1.15em; color: #163e69; }
+    table { border-collapse: collapse; }
+    th, td { border: 1px solid #163e69; padding: 5px; }
+    th, td:first-child { text-align: center; font-weight: bold; }
+    th:first-child { border: 0px; }
+</style>
+
+<div class="story for_info_only">
+<strong>Magician:</strong> John, I'm going to blow your head with a simple magic trick. Choose five cards.<br>
+<i>The magician turns around to see nothing.</i><br>
+<strong>John:</strong> I just picked five cards.<br>
+<strong>Magician:</strong> Bot will tell me four of them and I will guess the fifth one.<br>
+<strong>Bot:</strong> Jack of diamonds, Ace of hearts, Queen of clubs, King of spades.<br>
+<strong>Magician:</strong> I see red, yeah it's of diamonds... And it's not a figure...
+It's pretty low... The three of diamonds, right?!<br>
+<i>The magician quickly turns around to see John's face...</i><br>
+<strong>John:</strong> No way!<br>
+<strong>Magician:</strong> Told you!<br>
+<strong>John:</strong> It was just luck, do it again!<br>
+<strong>Magician:</strong> I can do it all day long, dummy.
+</div>
+
+<p>
+Well, it's an automatic magic trick, that I will explain in a moment.
+You will have to create two functions. A function named <code>bot</code> which will take five cards,
+an integer and return four of them ; and a function named <code>magician</code> which will take four cards,
+the same integer and return the fifth one.
+</p>
+
+<p>
+The trick use the <a href="https://en.wikipedia.org/wiki/Standard_52-card_deck">standard 52-card deck</a>.
+Cards will be represented like <code>'<code class="r">A ♥</code>', '<code class="r">3 ♦</code>', '<code class="b">K ♠</code>', '<code class="b">Q ♣</code>', '<code class="r">J ♦</code>'</code>
+(<code class="b">♣</code> for clubs, <code class="r">♦</code> for diamonds,
+<code class="r">♥</code> for hearts, <code class="b">♠</code> for spades,
+A for Ace, J for Jack, Q for Queen and K for King).<br>
+
+We will soon need to compare cards. The deck order is
+<code><code class="b">A ♣</code> < <code class="r">A ♦</code> < <code class="r">A ♥</code> < <code class="b">A ♠</code> < <code class="b">2 ♣</code> < <code>...</code></code>.
+To compare two cards, look ranks <code>A < 2 < ... < 10 < J < Q < K</code>,
+then suits <code><code class="b">♣</code> < <code class="r">♦</code> < <code class="r">♥</code> < <code class="b">♠</code></code>
+(same order than with letters: <code>club < diamond < heart < spade</code>).
+</p>
+
+<p>
+The card the bot choose to hide and the order of the four cards the bot says is crucial for the magician
+so he can guess the fifth one. There are five cards, but only four suits so there are at least two cards
+from the same suit, we name them <i>card A</i> and <i>card B</i>. The bot will hide one and say the other,
+but which one? Imagine the thirteen cards in a circle, <strong>clockwise</strong>.
+If going from <i>card A</i> to <i>card B</i> on this circle is quicker than going from <i>card B</i> to <i>card A</i>,
+then we will hide <i>card B</i>, say <i>card A</i>, and the distance from <i>card A</i> to <i>card B</i>
+is noted as delta (it's necessarily a number between one and six). We still have three cards to say,
+and since there are six ways to tell three cards, we can transmit "delta information".
+The <i>card A</i> will be the starting point, then by "adding" delta to <i>card A</i>,
+the magician can "guess" the fifth card.<br>
+
+Sort the three remaining cards, according to the above order, and note them <i>C1</i>, <i>C2</i> and <i>C3</i>.
+If delta is 5 or 6, put <i>C1</i> first, if delta is 3 or 4, put <i>C2</i> first, and <i>C3</i> otherwise.
+You still have two cards to say, tell them in order if delta is odd (1, 3, 5), and in reverse order otherwise (2, 4, 6).<br>
+
+At this point, the bot have two things to say: the <i>card A</i>, and a list of three cards.
+If we repeat this magic trick multiple times and if we always say the <i>card A</i> first,
+John might notice it since the fifth card and <i>card A</i> have the same suit.
+So we are not going to always tell <i>card A</i> first. The first time, we will say it first,
+the second time, say it second, ..., the fifth time, say it first again...
+</p>
+
+<div class="for_info_only">
+<strong>Example:</strong> John chooses
+<code class="r">A ♥</code>, <code class="r">3 ♦</code>, <code class="b">K ♠</code>, <code class="b">Q ♣</code> and <code class="r">J ♦</code>.
+<ul>
+    <li>
+        <code class="r">3 ♦</code> and <code class="r">J ♦</code> have the same suit, it's quicker to go from
+        <code class="r">J ♦</code> to <code class="r">3 ♦</code> (<i>delta = 5</i>) than otherwise (8).
+        We <i>hide <code class="r">3 ♦</code></i>. And the <i>starting point is <code class="r">J ♦</code></i>.
+    </li>
+    <li>
+        Remains <code class="r">A ♥</code>, <code class="b">K ♠</code> and <code class="b">Q ♣</code>.
+        Sorted, it's <code class="r">A ♥</code>, <code class="b">Q ♣</code> and <code class="b">K ♠</code>.
+        delta = 5 so C1 = <code class="r">A ♥</code> first, 5 is odd so the other two in order.
+        So <code class="r">A ♥</code>, <code class="b">Q ♣</code> and <code class="b">K ♠</code>.
+    </li>
+    <li>
+        Since it's the first time we do the magic trick, then the bot says
+        <code class="r">J ♦</code> first, then <code class="r">A ♥</code>, <code class="b">Q ♣</code> and <code class="b">K ♠</code>.
+    </li>
+    <li>
+        The magician hears <code class="r">J ♦</code>, <code class="r">A ♥</code>, <code class="b">Q ♣</code> and <code class="b">K ♠</code>.
+    </li>
+    <li>
+        It's the first time he does the magic trick so <code class="r">J ♦</code> is the starting point. He can say it's of diamonds.
+    </li>
+    <li>
+        From <code class="r">A ♥</code>, <code class="b">Q ♣</code>, <code class="b">K ♠</code> order, he deduces <i>delta = 5</i>
+        (since <code class="r">A ♥</code> < <code class="b">Q ♣</code> < <code class="b">K ♠</code>).
+        So <code class="r">J ♦</code> <code>+ 5 ==</code> <code class="r">3 ♦</code>.
+        He says it, with some show.
+    </li>
+</ul>
+<div style="text-align: center">
+    <img src="{{MEDIA}}cards-example.png" style="max-height: 150px">
+</div>
+</div>
+
+<table>
+    <thead>
+        <th></th>
+        <th>bot</th>
+        <th>magician</th>
+    </thead>
+    <tr>
+        <td>Input</td>
+        <td>Five strings and an integer.</td>
+        <td>Four strings and an integer.</td>
+    </tr>
+    <tr>
+        <td>Output</td>
+        <td>A list/tuple of four strings.</td>
+        <td>A string.</td>
+    </tr>
+</table>
+
+<pre class="for_info_only brush: python">
+bot('A ♥', '3 ♦', 'K ♠', 'Q ♣', 'J ♦', n=1) == ['J ♦', 'A ♥', 'Q ♣', 'K ♠']
+magician('J ♦', 'A ♥', 'Q ♣', 'K ♠', n=1) == '3 ♦'
+</pre>
+
+<p class="for_info_only">
+    <strong>How it is used:</strong> To amaze and impress people with your magic skills.
+</p>
